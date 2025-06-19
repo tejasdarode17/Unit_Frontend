@@ -69,7 +69,7 @@ const SignUP = () => {
 
 
                 <div className='w-full flex justify-center items-center mb-6'>
-                    <img className='w-50 h-auto logo' src="/public/logo.png" alt="Logo" />
+                    <img className='w-50 h-auto logo' src="logo.png" alt="Logo" />
                 </div>
 
 
@@ -129,7 +129,7 @@ const SignUP = () => {
                         onClick={handelGoogleSignIN}
                         className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
                     >
-                        <img src="/public/google.png" alt="Google" className='w-6 h-6 logo' />
+                        <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
                         Continue with Google
                     </button>
                 </div>
