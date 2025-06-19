@@ -3,7 +3,6 @@ import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../utils/Slices/userSlice'
-import unitLogo from "../../../assets/logo.png";
 
 
 const Nav = () => {
@@ -50,7 +49,7 @@ const Nav = () => {
                     >
                         <div className="w-10 h-10 p-1.5 rounded-lg bg-gradient-to-r from-[#ff11a4] to-[#ff6bae] group-hover:rotate-[15deg] transition-transform duration-300">
                             <img
-                                src={unitLogo}
+                                src="/public/logo.png"
                                 alt="Logo"
                                 className="w-full h-full object-contain"
                             />

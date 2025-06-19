@@ -5,8 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/Slices/userSlice';
 import { useGoogleSignIn } from '../../Hooks/useGoogleSignIn';
-import unitLogo from "../../../assets/logo.png";
-import googleLogo from "../../../assets/google.png";
+
 
 
 
@@ -90,7 +89,7 @@ const Login = () => {
 
                 {/* Logo */}
                 <div className='w-full flex justify-center items-center mb-6'>
-                    <img className='w-50 h-auto logo' src={unitLogo} alt="Logo" />
+                    <img className='w-50 h-auto logo' src='/public/logo.png' alt="Logo" />
                 </div>
 
                 {/* Form */}
@@ -142,7 +141,7 @@ const Login = () => {
                             onClick={handelGoogleSignIN}
                             className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
                         >
-                            <img src={googleLogo} alt="Google" className='w-6 h-6 logo' />
+                            <img src='/public/google.png' alt="Google" className='w-6 h-6 logo' />
                             Continue with Google
                         </button>
 
