@@ -4,6 +4,9 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGoogleSignIn } from '../../Hooks/useGoogleSignIn';
+import unitLogo from "../../../assets/logo.png";
+import googleLogo from "../../../assets/google.png";
+
 
 const SignUP = () => {
 
@@ -80,7 +83,7 @@ const SignUP = () => {
 
 
                 <div className='w-full flex justify-center items-center mb-6'>
-                    <img className='w-50 h-auto logo' src="/assets/logo.png" alt="Logo" />
+                    <img className='w-50 h-auto logo' src={unitLogo} alt="Logo" />
                 </div>
 
 
@@ -140,7 +143,7 @@ const SignUP = () => {
                         onClick={handelGoogleSignIN}
                         className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
                     >
-                        <img src="/assets/google.png" alt="Google" className='w-6 h-6 logo' />
+                        <img src={googleLogo} alt="Google" className='w-6 h-6 logo' />
                         Continue with Google
                     </button>
                 </div>
