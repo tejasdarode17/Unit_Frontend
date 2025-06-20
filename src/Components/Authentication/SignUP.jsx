@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGoogleSignIn } from '../../Hooks/useGoogleSignIn';
-import VerificationShimmer from './VerificationShimmer';
 
 const SignUP = () => {
 
+    const userData = useSelector((state) => state.user.userData) || null
     const [userSignInData, setUserSignInData] = useState({
         name: "",
         email: "",
@@ -16,7 +16,6 @@ const SignUP = () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.user.userData) || null
 
 
     const { handleGoogleSignIn, googleLoding } = useGoogleSignIn();
@@ -26,6 +25,12 @@ const SignUP = () => {
         return <Navigate to="/home" replace />;
     }
 
+
+    useEffect(() => {
+        if (googleLoding) {
+            navigate("/verify");
+        }
+    }, [googleLoding, navigate]);
 
     async function handelUserSignIN() {
         try {
@@ -128,20 +133,14 @@ const SignUP = () => {
                     }
                     <p className='text-center'>or</p>
 
-                    {
-                        googleLoding ? (
-                            navigate("/verify")
-                        ) : (
+                    <button
+                        onClick={onGoogleClick}
+                        className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
+                    >
+                        <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
+                        Continue with Google
+                    </button>
 
-                            <button
-                                onClick={onGoogleClick}
-                                className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
-                            >
-                                <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
-                                Continue with Google
-                            </button>
-                        )
-                    }
                 </div>
 
 

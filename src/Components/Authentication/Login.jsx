@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState ,useEffect } from 'react'
 import axios from "axios"
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 import toast from 'react-hot-toast';
@@ -11,6 +11,7 @@ import { useGoogleSignIn } from '../../Hooks/useGoogleSignIn';
 
 const Login = () => {
 
+    const userData = useSelector((state) => state.user.userData) || null
     const [loginData, setLoginData] = useState({
         email: "",
         password: ""
@@ -20,7 +21,6 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const userData = useSelector((state) => state.user.userData) || null
     const { handleGoogleSignIn, googleLoding } = useGoogleSignIn();
 
 
@@ -33,6 +33,11 @@ const Login = () => {
         await handleGoogleSignIn();
     }
 
+    useEffect(() => {
+        if (googleLoding) {
+            navigate("/verify");
+        }
+    }, [googleLoding, navigate]);
 
     async function handelUserLogin() {
 
@@ -138,24 +143,15 @@ const Login = () => {
                                 </button>
                             )
                         }
-
                         <p className='text-center'>or</p>
-
-                        {
-                            googleLoding ? (
-                                navigate("/verify")
-                            ) : (
-
-                                <button
-                                    onClick={onGoogleClick}
-                                    className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
-                                >
-                                    <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
-                                    Continue with Google
-                                </button>
-                            )
-                        }
-
+                        
+                        <button
+                            onClick={onGoogleClick}
+                            className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
+                        >
+                            <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
+                            Continue with Google
+                        </button>
 
                     </div>
 
