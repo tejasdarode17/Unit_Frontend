@@ -4,13 +4,16 @@ import axios from "axios";
 import { addUser } from "../utils/Slices/userSlice";
 import toast from "react-hot-toast";
 import googleAuth from "../utils/firebase";
+import { useState } from "react";
 
 export const useGoogleSignIn = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+    const [googleLoding , setGoogleLoading] = useState(false)
+    
     const handleGoogleSignIn = async () => {
         try {
+            setGoogleLoading(true);
+            
             const googleData = await googleAuth();
 
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/google-auth/`, {
@@ -21,7 +24,6 @@ export const useGoogleSignIn = () => {
 
             dispatch(addUser(data?.user));
             localStorage.setItem("token", data?.token);
-            navigate("/");
         } catch (error) {
             if (error.response) {
                 toast.error(error.data?.message || "Something went wrong on the server.");
@@ -30,8 +32,10 @@ export const useGoogleSignIn = () => {
             } else {
                 toast.error("An error occurred: " + error.message);
             }
+        }finally{
+            setGoogleLoading(false)
         }
     };
 
-    return handleGoogleSignIn;
+    return {handleGoogleSignIn , googleLoding}
 };

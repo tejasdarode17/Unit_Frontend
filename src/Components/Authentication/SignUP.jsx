@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGoogleSignIn } from '../../Hooks/useGoogleSignIn';
+import VerificationShimmer from './VerificationShimmer';
 
 const SignUP = () => {
 
@@ -12,17 +13,19 @@ const SignUP = () => {
         email: "",
         password: "",
     })
-
     const [loading, setLoading] = useState(false)
 
-    const handelGoogleSignIN = useGoogleSignIn()
     const navigate = useNavigate();
     const userData = useSelector((state) => state.user.userData) || null
+
+
+    const { handleGoogleSignIn, googleLoding } = useGoogleSignIn();
 
 
     if (userData) {
         return <Navigate to="/home" replace />;
     }
+
 
     async function handelUserSignIN() {
         try {
@@ -50,16 +53,15 @@ const SignUP = () => {
             navigate("/verify")
 
         } catch (error) {
-            if (error.response) {
-                toast.error(error.data?.message || "Something went wrong on the server.");
-            } else if (error.request) {
-                toast.error("No response from the server. Please try again later.");
-            } else {
-                toast.error("An error occurred: " + error.message);
-            }
+            toast.error("Google Sign In Failed")
         } finally {
             setLoading(false)
         }
+    }
+
+
+    const onGoogleClick = async () => {
+        await handleGoogleSignIn();
     }
 
 
@@ -125,13 +127,21 @@ const SignUP = () => {
                         )
                     }
                     <p className='text-center'>or</p>
-                    <button
-                        onClick={handelGoogleSignIN}
-                        className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
-                    >
-                        <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
-                        Continue with Google
-                    </button>
+
+                    {
+                        googleLoding ? (
+                            navigate("/verify")
+                        ) : (
+
+                            <button
+                                onClick={onGoogleClick}
+                                className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
+                            >
+                                <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
+                                Continue with Google
+                            </button>
+                        )
+                    }
                 </div>
 
 

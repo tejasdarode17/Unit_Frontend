@@ -21,12 +21,16 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const userData = useSelector((state) => state.user.userData) || null
-    const handelGoogleSignIN = useGoogleSignIn()
+    const { handleGoogleSignIn, googleLoding } = useGoogleSignIn();
 
 
 
     if (userData) {
         return <Navigate to="/home" replace />;
+    }
+
+    const onGoogleClick = async () => {
+        await handleGoogleSignIn();
     }
 
 
@@ -137,13 +141,20 @@ const Login = () => {
 
                         <p className='text-center'>or</p>
 
-                        <button
-                            onClick={handelGoogleSignIN}
-                            className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
-                        >
-                            <img src='/google.png' alt="Google" className='w-6 h-6 logo' />
-                            Continue with Google
-                        </button>
+                        {
+                            googleLoding ? (
+                                navigate("/verify")
+                            ) : (
+
+                                <button
+                                    onClick={onGoogleClick}
+                                    className='w-full flex items-center justify-center gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-95 duration-100'
+                                >
+                                    <img src="/google.png" alt="Google" className='w-6 h-6 logo' />
+                                    Continue with Google
+                                </button>
+                            )
+                        }
 
 
                     </div>
