@@ -14,9 +14,10 @@ export const useGoogleSignIn = () => {
             setGoogleLoading(true);
             
             const googleData = await googleAuth();
+            const idToken = await googleData.user.getIdToken()
 
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/google-auth/`, {
-                accessToken: googleData?.user?.accessToken,
+               idToken
             });
 
             const data = response.data;
